@@ -35,10 +35,27 @@ public class LoginSteps {
         driver.findElement(By.xpath("//*[contains(text(), 'Get a Quote')]")).click();
     }
 
+    @When("the user enters the Seattle zipcode")
+    public void enterSeattleZipcodeAndGetQuote() {
+        WebElement element = driver.findElement(By.className("icon-products-auto"));
+        Actions actions = new Actions(driver);
+        actions.moveToElement(element).click().build().perform();
+
+        driver.findElement(By.name("zipcode")).sendKeys("98117");
+        driver.findElement(By.xpath("//*[contains(text(), 'Get a Quote')]")).click();
+    }
+
     @Then("the user should see the city of Atlanta populated on the create quote screen")
     public void cityFieldShouldBePopulatedWithAtlanta() throws InterruptedException {
         Thread.sleep(20000);
         WebElement element = driver.findElement(By.xpath("//*[@id=\"city-customer-0\"]/span[2]/input"));
         assertThat(element.getAttribute("value"), is("Atlanta"));
+    }
+
+    @Then("the user should see the city of Seattle populated on the create quote screen")
+    public void cityFieldShouldBePopulatedWithSeattle() throws InterruptedException {
+        Thread.sleep(20000);
+        WebElement element = driver.findElement(By.xpath("//*[@id=\"city-customer-0\"]/span[2]/input"));
+        assertThat(element.getAttribute("value"), is("Seattle"));
     }
 }
