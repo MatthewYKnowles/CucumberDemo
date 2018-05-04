@@ -18,6 +18,7 @@ public class LoginSteps {
 
     private WebDriver driver;
 
+
     @Given("the user is on the Liberty Mutual home page")
     public void goToLibertyMutualHomePage() {
         System.setProperty("webdriver.chrome.driver", "jars/chromedriver.exe");
@@ -45,17 +46,11 @@ public class LoginSteps {
         driver.findElement(By.xpath("//*[contains(text(), 'Get a Quote')]")).click();
     }
 
-    @Then("the user should see the city of Atlanta populated on the create quote screen")
-    public void cityFieldShouldBePopulatedWithAtlanta() throws InterruptedException {
+    @Then("^the user should see the city of \"(.*)\"$")
+    public void cityFieldShouldBePopulated(String city) throws InterruptedException {
         Thread.sleep(20000);
         WebElement element = driver.findElement(By.xpath("//*[@id=\"city-customer-0\"]/span[2]/input"));
-        assertThat(element.getAttribute("value"), is("Atlanta"));
-    }
-
-    @Then("the user should see the city of Seattle populated on the create quote screen")
-    public void cityFieldShouldBePopulatedWithSeattle() throws InterruptedException {
-        Thread.sleep(20000);
-        WebElement element = driver.findElement(By.xpath("//*[@id=\"city-customer-0\"]/span[2]/input"));
-        assertThat(element.getAttribute("value"), is("Seattle"));
+        assertThat(element.getAttribute("value"), is(city));
+        driver.quit();
     }
 }
